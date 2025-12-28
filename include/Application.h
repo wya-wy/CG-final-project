@@ -29,31 +29,39 @@ private:
     // 状态
     float deltaTime;
     float lastFrame;
-    bool isMousePressed;
+    bool isMousePressed;      // 右键漫游状态
+    bool isDragging;          // [新增] 左键拖拽物体状态
     bool firstMouse;
     float lastX, lastY;
+
+    // UI 缓存变量 [新增]
+    char objPathBuffer[256] = "assets/models/teapot.obj";
+    char texturePathBuffer[256] = "assets/textures/wood.png";
 
     // 初始化
     bool InitGLFW();
     bool InitImGui();
     void InitScene();
 
-    // 核心逻辑
+    // 逻辑
     void ProcessInput();
     void RenderUI();
     void RenderScene();
-    
-    // 物体管理
-    void DeleteSelectedObject(); // 新增：删除功能
+    void DeleteSelectedObject();
 
-    // 射线拾取系统 (升级版)
+    // 射线检测算法
     void SelectObjectFromMouse(double xpos, double ypos);
-    // 射线-AABB(轴对齐包围盒)相交检测
     bool IntersectRayAABB(const glm::vec3& rayOrigin, const glm::vec3& rayDir, 
-                          const glm::vec3& boxMin, const glm::vec3& boxMax, 
-                          float& t);
+                          const glm::vec3& boxMin, const glm::vec3& boxMax, float& t);
+    
+    // [新增] 射线与平面相交 (用于拖拽移动)
+    bool IntersectRayPlane(const glm::vec3& rayOrigin, const glm::vec3& rayDir, 
+                           const glm::vec3& planeNormal, const glm::vec3& planePoint, 
+                           float& t);
+    // [新增] 处理拖拽逻辑
+    void ProcessDrag(double xpos, double ypos);
 
-    // 静态回调
+    // 回调
     static void FramebufferSizeCallback(GLFWwindow* window, int width, int height);
     static void MouseCallback(GLFWwindow* window, double xpos, double ypos);
     static void ScrollCallback(GLFWwindow* window, double xoffset, double yoffset);
