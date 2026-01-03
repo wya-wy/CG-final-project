@@ -94,26 +94,26 @@ add_custom_command(TARGET App POST_BUILD
     $<TARGET_FILE_DIR:App>/assets
 )
 
-# --- 9. 创建单独的测试导出程序 ---
-set(TEST_EXPORT_SOURCES
-    src/ModelLoader.cpp
-    src/GeometryUtils.cpp
-    src/Mesh.cpp
-    src/SceneContext.cpp
-    src/Shader.cpp
-    src/glad.c
-    test_export_simple.cpp
-)
+# --- 9. 创建单独的测试导出程序 --- (已注释掉，不再需要)
+# set(TEST_EXPORT_SOURCES
+#     src/ModelLoader.cpp
+#     src/GeometryUtils.cpp
+#     src/Mesh.cpp
+#     src/SceneContext.cpp
+#     src/Shader.cpp
+#     src/glad.c
+#     test_export_simple.cpp
+# )
 
-add_executable(TestExport ${TEST_EXPORT_SOURCES})
+# add_executable(TestExport ${TEST_EXPORT_SOURCES})
 
-target_include_directories(TestExport PRIVATE include)
-target_link_libraries(TestExport PRIVATE glm::glm)
+# target_include_directories(TestExport PRIVATE include)
+# target_link_libraries(TestExport PRIVATE glm::glm)
 
-if(WIN32)
-    target_link_libraries(TestExport PRIVATE opengl32)
-elseif(APPLE)
-    target_link_libraries(TestExport PRIVATE "-framework OpenGL" "-framework Cocoa" "-framework IOKit" "-framework CoreVideo")
-else()
-    target_link_libraries(TestExport PRIVATE GL dl pthread)
-endif()
+# if(WIN32)
+#     target_link_libraries(TestExport PRIVATE opengl32)
+# elseif(APPLE)
+#     target_link_libraries(TestExport PRIVATE "-framework OpenGL" "-framework Cocoa" "-framework IOKit" "-framework CoreVideo")
+# else()
+#     target_link_libraries(TestExport PRIVATE GL dl pthread)
+# endif()
