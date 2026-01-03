@@ -52,6 +52,17 @@ set(IMGUI_SOURCES
     ${IMGUI_DIR}/backends/imgui_impl_opengl3.cpp
 )
 
+# --- 4.5 STB Image ---
+message(STATUS "Fetching STB...")
+FetchContent_Declare(
+    stb
+    GIT_REPOSITORY https://gitee.com/mirrors/stb.git
+    GIT_TAG        master
+    GIT_SHALLOW    TRUE
+)
+FetchContent_MakeAvailable(stb)
+include_directories(${stb_SOURCE_DIR})
+
 # --- 5. 定义项目文件 ---
 set(PROJECT_SOURCES
     src/main.cpp
@@ -60,6 +71,8 @@ set(PROJECT_SOURCES
     src/SceneContext.cpp
     src/Shader.cpp
     src/Mesh.cpp
+    src/Texture.cpp
+    src/Renderer.cpp
     src/ModelLoader.cpp
     src/GeometryUtils.cpp
     ${IMGUI_SOURCES}
